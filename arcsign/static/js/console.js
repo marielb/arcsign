@@ -14,13 +14,18 @@ var output = {
   indexFinger: document.getElementById('output_indexFinger'),
   middleFinger: document.getElementById('output_middleFinger'),
   ringFinger: document.getElementById('output_ringFinger'),
-  pinky: document.getElementById('output_pinky')
+  pinky: document.getElementById('output_pinky'),
+  grabStrength: document.getElementById('output_grabStrength'),
+  palmNormal: document.getElementById('output_palmNormal'),
+  palmPosition: document.getElementById('output_palmPosition'),
+  palmVelocity: document.getElementById('output_palmVelocity')
 };
 
 
 window.TO_DEG = 180 / Math.PI;
 
 var fingerNames = ['thumb', 'indexFinger', 'middleFinger', 'ringFinger', 'pinky'];
+var handProperties = ['grabStrength', 'palmNormal', 'palmPosition', 'palmVelocity']
 
 function gestureTrigger(name) {
   gestureArmed = false;
@@ -28,6 +33,9 @@ function gestureTrigger(name) {
   setTimeout(function() {gestureArmed = true;}, 3000);
 }
 
+function displayVector(v) {
+  return 'X:' + v[0] + ' Y:' + v[1] + ' Z:' + v[2];
+}
 
 var gestureArmed = true;
 // Set up the controller:
@@ -35,13 +43,24 @@ Leap.loop({background: true}, {
   hand: function(hand){
     _.forEach(fingerNames, function(finger) {
       dir = hand[finger].distal.direction();
-      output[finger].innerHTML = 'X:' + dir[0] + ' Y:' + dir[1] + ' Z:' + dir[2];
+      output[finger].innerHTML = displayVector(dir);
+    });
+    _.forEach(handProperties, function(property) {
+      prop = hand[property];
+      if (Array.isArray(prop)) {
+        output[property].innerHTML = displayVector(prop);
+      } else {
+        output[property].innerHTML = prop.toPrecision(2);
+      }
     });
 
-    var d1 = hand.indexFinger.distal.direction();
-    if (d1[2] > 0.8 && gestureArmed) {
-      gestureTrigger('me');
+    if (hand.grabStrength >  0.25 && hand.palmVelocity[1] < -100 && gestureArmed) {
+      gestureTrigger('hungry');
     }
+    // var d1 = hand.indexFinger.distal.direction();
+    // if (d1[2] > 0.8 && gestureArmed) {
+    //   gestureTrigger('me');
+    // }
   }
 }
          );

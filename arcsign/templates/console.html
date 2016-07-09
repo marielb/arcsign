@@ -7,7 +7,11 @@
     <h1 class="text-center">Debugger</h1>
 
     <h2>Hand Object</h2>
-    <div id="hand_object"></div>
+    <ul>
+    {% for property in hand_props %}
+      <li> {{ property }}:  <span id="output_{{ property }}"></span></li>
+    {% endfor %}
+    </ul>
     <h2>Finger Directions</h2>
 
     <ul>

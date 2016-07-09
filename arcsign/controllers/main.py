@@ -10,4 +10,5 @@ def home():
 @main.route('/console')
 def console():
     fingers = ['thumb', 'indexFinger', 'middleFinger', 'ringFinger', 'pinky']
-    return render_template('console.html', fingers=fingers)
+    hand_props = ['grabStrength', 'palmNormal', 'palmPosition', 'palmVelocity']
+    return render_template('console.html', fingers=fingers, hand_props=hand_props)
