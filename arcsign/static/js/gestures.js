@@ -10,13 +10,14 @@ var Gestures = {
     }
   },
   'hungry': {
-    hand: function(hand) [
+    hand: function(hand) {
       if (hand.grabStrength >  0.25 && hand.palmVelocity[1] < -100 && gestureArmed) {
         window.console.log('hungry');
       }
     }
+  },
   'thirsty': {
-    hand: function(hand) [
+    hand: function(hand) {
       if (hand.grabStrength > 0.20 && hand.palmVelocity[1] < -100 && gestureArmed) {
         gestureStarted;
       }
