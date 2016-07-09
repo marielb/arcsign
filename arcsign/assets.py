@@ -9,9 +9,12 @@ common_css = Bundle(
 )
 
 common_js = Bundle(
+    'js/vendor/underscore-min.js',
     'js/vendor/jquery.min.js',
     'js/vendor/bootstrap.min.js',
     'js/vendor/leap-0.6.4.min.js',
+    'js/vendor/backbone-min.js',
+    'js/vendor/backbone.localStorage.js',
     Bundle(
         'js/main.js',
         filters='jsmin'
