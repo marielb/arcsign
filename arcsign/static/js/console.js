@@ -18,19 +18,29 @@ var output = {
   grabStrength: document.getElementById('output_grabStrength'),
   palmNormal: document.getElementById('output_palmNormal'),
   palmPosition: document.getElementById('output_palmPosition'),
-  palmVelocity: document.getElementById('output_palmVelocity')
+  palmVelocity: document.getElementById('output_palmVelocity'),
+  pitch: document.getElementById('output_pitch')
 };
 
 
 window.TO_DEG = 180 / Math.PI;
 
 var fingerNames = ['thumb', 'indexFinger', 'middleFinger', 'ringFinger', 'pinky'];
-var handProperties = ['grabStrength', 'palmNormal', 'palmPosition', 'palmVelocity']
+var handProperties = ['grabStrength', 'palmNormal', 'palmPosition', 'palmVelocity', 'pitch']
+var gestureStartHand;
 
 function gestureTrigger(name) {
   gestureArmed = false;
+  gestureStart = false;
   window.console.log('Gesture Triggered: ' + name);
-  setTimeout(function() {gestureArmed = true;}, 3000);
+  setTimeout(function() {gestureArmed = true; gestureStart = false}, 3000);
+}
+
+function startGesture(name, hand) {
+  gestureArmed = false;
+  gestureStart = true;
+  window.console.log('Gesture Started: ' + name);
+  setTimeout(function() {gestureArmed = true; gestureStart = false}, 3000);
 }
 
 function displayVector(v) {
@@ -38,6 +48,7 @@ function displayVector(v) {
 }
 
 var gestureArmed = true;
+var gestureStart = false;
 // Set up the controller:
 Leap.loop({background: true}, {
   hand: function(hand){
@@ -49,19 +60,28 @@ Leap.loop({background: true}, {
       prop = hand[property];
       if (Array.isArray(prop)) {
         output[property].innerHTML = displayVector(prop);
+      } else if (_.isFunction(prop)) {
+        output[property].innerHTML = hand[property]().toPrecision(2);
       } else {
         output[property].innerHTML = prop.toPrecision(2);
       }
     });
 
-    if (hand.grabStrength >  0.2 && hand.palmVelocity[1] < -100 &&  hand.palmNormal[2] > 0.75 &&  hand.pinky.extended && gestureArmed) {
-      gestureTrigger('hungry');
-      window.console.log(hand);
+    if (hand.grabStrength > 0.20 && Math.abs(hand.palmNormal[0]) > 0.7 && hand.pitch() > 0.3 && hand.pitch() < 1.2 && gestureArmed && !gestureStart) {
+      startGesture('drink', hand);
     }
-    if (hand.indexFinger.distal.direction()[2] > 0.8 && !(hand.pinky.extended || hand.ringFinger.extended) && gestureArmed) {
-      window.console.log(hand);
-      gestureTrigger('me');
+
+    if (gestureStart && hand.pitch() > 1.6) {
+      gestureTrigger('drink')
     }
+    // if (hand.grabStrength >  0.2 && hand.palmVelocity[1] < -100 &&  hand.palmNormal[2] > 0.75 &&  hand.pinky.extended && gestureArmed) {
+    //   gestureTrigger('hungry');
+    //   window.console.log(hand);
+    // }
+    // if (hand.indexFinger.distal.direction()[2] > 0.8 && !(hand.pinky.extended || hand.ringFinger.extended) && gestureArmed) {
+    //   window.console.log(hand);
+    //   gestureTrigger('me');
+    // }
   }
 }
          );

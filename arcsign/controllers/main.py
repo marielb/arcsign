@@ -10,5 +10,5 @@ def home():
 @main.route('/debug')
 def console():
     fingers = ['thumb', 'indexFinger', 'middleFinger', 'ringFinger', 'pinky']
-    hand_props = ['grabStrength', 'palmNormal', 'palmPosition', 'palmVelocity']
+    hand_props = ['grabStrength', 'palmNormal', 'palmPosition', 'palmVelocity', 'pitch']
     return render_template('console.html', fingers=fingers, hand_props=hand_props)
