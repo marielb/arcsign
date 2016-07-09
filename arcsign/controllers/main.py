@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for
-from app.extensions import cache
+from arcsign.extensions import cache
 
 main = Blueprint('main', __name__)
 

@@ -1,7 +1,7 @@
 from flask.ext.cache import Cache
 from flask_assets import Environment
 
-from app.models import User
+from arcsign.models import User
 
 # Setup flask cache
 cache = Cache()

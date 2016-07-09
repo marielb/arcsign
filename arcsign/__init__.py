@@ -3,11 +3,11 @@
 from flask import Flask
 from webassets.loaders import PythonLoader as PythonAssetsLoader
 
-from app import assets
-from app.models import db
-from app.controllers.main import main
+from arcsign import assets
+from arcsign.models import db
+from arcsign.controllers.main import main
 
-from app.extensions import (
+from arcsign.extensions import (
     cache,
     assets_env
 )
@@ -20,7 +20,7 @@ def create_app(object_name):
 
     Arguments:
         object_name: the python path of the config object,
-                     e.g. app.settings.ProdConfig
+                     e.g. arcsign.settings.ProdConfig
     """
 
     app = Flask(__name__)
