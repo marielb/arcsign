@@ -43,7 +43,7 @@ Leap.loop({background: true}, {
   hand: function(hand){
     _.forEach(fingerNames, function(finger) {
       dir = hand[finger].distal.direction();
-      output[finger].innerHTML = displayVector(dir);
+      output[finger].innerHTML = " extended: " + hand[finger].extended + " " + displayVector(dir);
     });
     _.forEach(handProperties, function(property) {
       prop = hand[property];
@@ -54,13 +54,14 @@ Leap.loop({background: true}, {
       }
     });
 
-    if (hand.grabStrength >  0.25 && hand.palmVelocity[1] < -100 && gestureArmed) {
+    if (hand.grabStrength >  0.2 && hand.palmVelocity[1] < -100 &&  hand.palmNormal[2] > 0.75 &&  hand.pinky.extended && gestureArmed) {
       gestureTrigger('hungry');
+      window.console.log(hand);
     }
-    // var d1 = hand.indexFinger.distal.direction();
-    // if (d1[2] > 0.8 && gestureArmed) {
-    //   gestureTrigger('me');
-    // }
+    if (hand.indexFinger.distal.direction()[2] > 0.8 && !(hand.pinky.extended || hand.ringFinger.extended) && gestureArmed) {
+      window.console.log(hand);
+      gestureTrigger('me');
+    }
   }
 }
          );
