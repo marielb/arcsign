@@ -4,13 +4,13 @@ import os
 
 from flask.ext.script import Manager, Server
 from flask.ext.script.commands import ShowUrls, Clean
-from app import create_app
-from app.models import db, User
+from arcsign import create_app
+from arcsign.models import db, User
 
 # default to dev config because no one should use this in
 # production anyway
 env = os.environ.get('APP_ENV', 'dev')
-app = create_app('app.settings.%sConfig' % env.capitalize())
+app = create_app('arcsign.settings.%sConfig' % env.capitalize())
 
 manager = Manager(app)
 manager.add_command("server", Server())

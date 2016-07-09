@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, flash, request, redirect, url_for
 from flask.ext.login import login_user, logout_user, login_required
 
-from app.extensions import cache
-from app.forms import LoginForm
-from app.models import User
+from arcsign.extensions import cache
+from arcsign.forms import LoginForm
+from arcsign.models import User
 
 main = Blueprint('main', __name__)
 

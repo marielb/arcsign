@@ -3,7 +3,7 @@
 
 import pytest
 
-from app.models import db, User
+from arcsign.models import db, User
 
 create_user = False
 
