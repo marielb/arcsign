@@ -10,8 +10,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         
         {% block meta %}
-            <meta name="description" content="">
-            <meta name="author" content="">
+            <meta name="description" content="Interactive ASL lesson">
+            <meta name="author" content="Team Arcsign">
         {% endblock %}
 
         {% assets "common_css" %}
@@ -31,6 +31,25 @@
         {% assets "common_js" %}
             <script type="text/javascript" src="{{ ASSET_URL }}"></script>
         {% endassets %}
+
+        <script type="text/template" id="question-template">
+            <div class="row text-center">
+                <div class="col-sm-12">
+                    <h2 class='answer'><%- answer %></h2>
+                    <% if (video) { %>
+                        <video autoplay="" controls="" loop="" preload="auto" width="320" height="240" data-setup="{}">
+                            <source src="<%- video %>" type="video/mp4">
+                        </video>
+                    <% } %>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-sm-12">
+                    <h3 class="text-danger">Recording</h3>
+                    <h3 class="text-success">Correct</h3>
+                </div>
+            </div>
+        </script>
         
         {% block js %}
         {% endblock %}

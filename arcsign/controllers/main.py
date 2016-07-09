@@ -7,7 +7,7 @@ main = Blueprint('main', __name__)
 def home():
     return render_template('index.html')
 
-@main.route('/console')
+@main.route('/debug')
 def console():
     fingers = ['thumb', 'indexFinger', 'middleFinger', 'ringFinger', 'pinky']
     hand_props = ['grabStrength', 'palmNormal', 'palmPosition', 'palmVelocity']

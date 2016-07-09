@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-sm-3 nav-menu">
             <h1>Arcsign</h1>
-            <a href='/'>Start Over</a>
+            <a id="start-over">Start Over</a>
             <ul>
                 <li>me</li>
                 <li>hungry</li>
@@ -19,23 +19,9 @@
                 <li>i want to drink (gesture)</li>
                 <li>do you want to drink? (type)</li>
             </ul>
-            <a href='/'><--Prev</a> <a href='/'>Next--></a>
+            <a id="prev-question"><--Prev</a> <a id="next-question">Next--></a>
         </div>
-        <div class="col-sm-6" id="question">
-            <div class="row text-center">
-                <div class="col-sm-12">
-                    <h2>HUNGRY</h2>
-                    <video autoplay="" controls="" loop="" preload="auto" width="320" height="240" data-setup="{}">
-                        <source src="https://media.spreadthesign.com/video/mp4/13/58529.mp4" type="video/mp4">
-                        <source src="https://media.spreadthesign.com/video/ogv/13/58529.ogv" type="video/ogg">
-                    </video>
-                </div>
-            <div class="row text-center">
-                <div class="col-sm-12">
-                    <h3 class="text-danger">Recording</h3>
-                    <h3 class="text-success">Correct</h3>
-                </div>
-            </div>
+        <div class="col-sm-6" id="question-box">
         </div>
     </div>
 {% endblock %}

@@ -18,6 +18,10 @@ common_js = Bundle(
     Bundle(
         'js/main.js',
         'js/gestures.js',
+        'js/lesson.json',
+        filters='jsmin'
+    ),
+    Bundle(
         'js/console.js',
         filters='jsmin'
     ),
