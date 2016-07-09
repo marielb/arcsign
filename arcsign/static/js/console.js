@@ -22,8 +22,14 @@ window.TO_DEG = 180 / Math.PI;
 
 var fingerNames = ['thumb', 'indexFinger', 'middleFinger', 'ringFinger', 'pinky'];
 
+function gestureTrigger(name) {
+  gestureArmed = false;
+  window.console.log('Gesture Triggered: ' + name);
+  setTimeout(function() {gestureArmed = true;}, 3000);
+}
 
 
+var gestureArmed = true;
 // Set up the controller:
 Leap.loop({background: true}, {
   hand: function(hand){
@@ -31,6 +37,12 @@ Leap.loop({background: true}, {
       dir = hand[finger].distal.direction();
       output[finger].innerHTML = 'X:' + dir[0] + ' Y:' + dir[1] + ' Z:' + dir[2];
     });
- }
-});
+
+    var d1 = hand.indexFinger.distal.direction();
+    if (d1[2] > 0.8 && gestureArmed) {
+      gestureTrigger('me');
+    }
+  }
+}
+         );
 
