@@ -40,3 +40,4 @@ env*
 *.sublime-*
 
 app/static/public/*
+app/settings.py

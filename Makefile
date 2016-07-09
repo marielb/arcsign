@@ -22,6 +22,3 @@ clean:
 
 lint:
 	flake8 --exclude=env .
-
-test:
-	py.test tests
