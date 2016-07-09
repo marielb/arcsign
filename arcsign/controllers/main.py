@@ -9,4 +9,5 @@ def home():
 
 @main.route('/console')
 def console():
-    return render_template('console.html')
+    fingers = ['thumb', 'indexFinger', 'middleFinger', 'ringFinger', 'pinky']
+    return render_template('console.html', fingers=fingers)

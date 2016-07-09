@@ -17,9 +17,7 @@ common_js = Bundle(
     'js/vendor/backbone.localStorage.js',
     Bundle(
         'js/main.js',
-        filters='jsmin'
-    ),
-    Bundle(
+        'js/gestures.js',
         'js/console.js',
         filters='jsmin'
     ),
