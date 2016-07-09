@@ -16,5 +16,9 @@ common_js = Bundle(
         'js/main.js',
         filters='jsmin'
     ),
+    Bundle(
+        'js/console.js',
+        filters='jsmin'
+    ),
     output='public/js/common.js'
 )

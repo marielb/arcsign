@@ -4,7 +4,6 @@ from flask import Flask
 from webassets.loaders import PythonLoader as PythonAssetsLoader
 
 from arcsign import assets
-from arcsign.models import db
 from arcsign.controllers.main import main
 
 from arcsign.extensions import (
