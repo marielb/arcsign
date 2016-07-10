@@ -24,19 +24,24 @@ $(function(){
       var self = this;
       self.gestureArmed = true;
       Leap.loop({background: true}, {
-        hand: function(hand){
-          var d1 = hand.indexFinger.distal.direction();
-          if (hand.palmVelocity[1] < -300 && hand.grabStrength > 0.1 && self.gestureArmed) {
-            console.log(' velocity[1]: ' + hand.palmVelocity[1] + ' grabStrength: ' + hand.grabStrength +' ' + self.gestureArmed);
-            self.gestureTrigger('hungry');
-          }
-          if (hand.palmVelocity[2] > 300 && d1[2] > 0.25 && self.gestureArmed) {
-            console.log('velocity[2]: ' + hand.palmVelocity[2] + ' fingerDirection: ' + d1[2] + ' ' + self.gestureArmed);
-            self.gestureTrigger('me');
-          }
-          if (hand.palmVelocity[2] < -300 && d1[2] < -0.25 && self.gestureArmed) {
-            console.log('velocity[2]: ' + hand.palmVelocity[2] + ' fingerDirection: ' + d1[2] + ' ' + self.gestureArmed);
-            self.gestureTrigger('you');
+        frame: function(frame) {
+          if (frame.hands.length == 2 && frame.hands[0].palmVelocity[2] > 200 && frame.hands[1].palmVelocity[2] > 200 && self.gestureArmed) {
+            self.gestureTrigger('want');
+          } else if (frame.hands.length == 1) {
+            hand = frame.hands[0];
+            var d1 = hand.indexFinger.distal.direction();
+            if (hand.palmVelocity[1] < -300 && hand.grabStrength > 0.1 && self.gestureArmed) {
+              console.log(' velocity[1]: ' + hand.palmVelocity[1] + ' grabStrength: ' + hand.grabStrength +' ' + self.gestureArmed);
+              self.gestureTrigger('hungry');
+            }
+            if (hand.palmVelocity[2] > 300 && d1[2] > 0.25 && self.gestureArmed) {
+              console.log('velocity[2]: ' + hand.palmVelocity[2] + ' fingerDirection: ' + d1[2] + ' ' + self.gestureArmed);
+              self.gestureTrigger('me');
+            }
+            if (hand.palmVelocity[2] < -300 && d1[2] < -0.25 && self.gestureArmed) {
+              console.log('velocity[2]: ' + hand.palmVelocity[2] + ' fingerDirection: ' + d1[2] + ' ' + self.gestureArmed);
+              self.gestureTrigger('you');
+            }
           }
         }
       })
@@ -177,11 +182,10 @@ $(function(){
 
 
     keyAction: function(e) {
-      console.log(e);
-        var code = e.keyCode || e.which;
-        if(code == 32) { 
-            this.loadNextQuestion();
-        }
+      var code = e.keyCode || e.which;
+      if (code == 32) { 
+          this.loadNextQuestion();
+      }
     }
   });
 
