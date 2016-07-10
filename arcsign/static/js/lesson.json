@@ -1,19 +1,22 @@
 [
   {
   	"id": 0,
-  	"answer": "me",
+    "name": "me",
+    "answer": "me",
   	"type": "gesture",
   	"video": "https://media.spreadthesign.com/video/mp4/13/48587.mp4"
   },
   {
   	"id": 1,
-  	"answer": "hungry",
+    "name": "hungry",
+    "answer": "hungry",
   	"type": "gesture",
   	"video": "https://media.spreadthesign.com/video/mp4/13/58529.mp4"
   },
   {
   	"id": 2,
-  	"answer": "i am hungry",
+    "name": "i am hungry",
+    "answer": "me hungry",
   	"type": "text",
   	"video": "https://media.spreadthesign.com/video/mp4/13/93471.mp4"
   },

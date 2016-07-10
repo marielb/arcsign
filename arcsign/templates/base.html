@@ -35,7 +35,7 @@
         <script type="text/template" id="question-template">
             <div class="row text-center">
                 <div class="col-sm-12">
-                    <h2 class='answer'><%- answer %></h2>
+                    <h2 class='answer'><%- name %></h2>
                     <% if (video) { %>
                         <video autoplay="" controls="" loop="" preload="auto" width="320" height="240" data-setup="{}">
                             <source src="<%- video %>" type="video/mp4">
@@ -45,8 +45,10 @@
             </div>
             <div class="row text-center">
                 <div class="col-sm-12">
-                    <h3 class="text-danger">Recording</h3>
-                    <h3 class="text-success">Correct</h3>
+                    <% if (answered) { %>
+                        <h3 class="text-success">Correct</h3>
+                        <a id="next-question">Next</a>
+                    <% } %>
                 </div>
             </div>
         </script>

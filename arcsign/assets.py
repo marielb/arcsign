@@ -21,9 +21,5 @@ common_js = Bundle(
         'js/lesson.json',
         filters='jsmin'
     ),
-    Bundle(
-        'js/console.js',
-        filters='jsmin'
-    ),
     output='public/js/common.js'
 )

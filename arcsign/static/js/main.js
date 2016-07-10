@@ -4,8 +4,54 @@ $(function(){
   // ----------
 
   var Question = Backbone.Model.extend({
-    answerRecognized: function() {
-      return;
+    GESTURE_TYPE: 'gesture',
+    TEXT_TYPE: 'text',
+
+    // Default attributes for the todo item.
+    defaults: function() {
+      return {
+        answerList: [],
+        answered: false,
+      };
+    },
+
+    initialize: function() {
+      this.answerList = this.get('answer').split(' ');
+    },
+
+    recordAnswer: function() {
+      var self = this;
+      self.gestureArmed = true;
+      Leap.loop({background: true}, {
+        hand: function(hand){
+          // if (self.gestureArmed) {
+          //   console.log('velocity[1]: ' + hand.palmVelocity[1] + ' grabStrength: ' + hand.grabStrength +' ' + self.gestureArmed);
+          // }
+          if (hand.palmVelocity[1] < -300 && self.gestureArmed) {
+            console.log(' velocity[1]: ' + hand.palmVelocity[1] + 'grabStrength: ' + hand.grabStrength +' ' + self.gestureArmed);
+            self.gestureTrigger('hungry');
+          }
+          var d1 = hand.indexFinger.distal.direction();
+          if (hand.palmVelocity[2] > 300 && d1[2] > 0.25 && self.gestureArmed) {
+            console.log('velocity[2]: ' + hand.palmVelocity[2] + ' fingerDirection: ' + d1[2] + ' ' + self.gestureArmed);
+            self.gestureTrigger('me');
+          }
+        }
+      })
+    },
+
+    gestureTrigger: function(name) {
+      this.gestureArmed = false;
+
+      if (name == this.answerList[0]) {
+        this.answerList.shift();
+        if (this.answerList.length == 0) {
+          this.set('answered', true);
+        }
+      }
+
+      var self = this;
+      setTimeout(function() { self.gestureArmed = true; }, 1000);
     }
   });
 
@@ -13,9 +59,6 @@ $(function(){
   // ---------------
 
   var Questions = Backbone.Collection.extend({
-    GESTURE_TYPE: 'gesture',
-    TEXT_TYPE: 'text',
-
     model: Question,
     url: '/static/js/lesson.json',
     localStorage: new Backbone.LocalStorage('lesson-backbone'),
@@ -61,6 +104,8 @@ $(function(){
     },
 
     initialize: function() {
+      console.log(this.model.answerList);
+      this.model.recordAnswer();
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
     },
