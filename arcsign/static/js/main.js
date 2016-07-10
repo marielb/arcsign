@@ -42,6 +42,9 @@ $(function(){
               console.log('velocity[2]: ' + hand.palmVelocity[2] + ' fingerDirection: ' + d1[2] + ' ' + self.gestureArmed);
               self.gestureTrigger('you');
             }
+            if (hand.grabStrength > 0.1 && Math.abs(hand.palmNormal[0]) > 0.7 && hand.pitch() > 1.5 && self.gestureArmed) {
+              self.gestureTrigger('drink');
+            }
           }
         }
       })
@@ -98,6 +101,7 @@ $(function(){
   });
 
   var Lesson = new Questions;
+  var LeapController;
 
   // Question View
   // --------------
@@ -173,6 +177,13 @@ $(function(){
       this.$("#question-box").html(view.render().el);
     },
 
+    loadPreviousQuestion: function() {
+      if (Lesson.currentQuestion > 0) {
+        Lesson.currentQuestion -= 1;
+        this.render();
+      }
+    },
+
     loadNextQuestion: function() {
       if (Lesson.currentQuestion < Lesson.length - 1) {
         Lesson.currentQuestion += 1;
@@ -180,10 +191,13 @@ $(function(){
       }
     },
 
-
     keyAction: function(e) {
       var code = e.keyCode || e.which;
       if (code == 32) { 
+          this.loadNextQuestion();
+      } else if (code == 37) {
+          this.loadPreviousQuestion();
+      } else if (code == 39) {
           this.loadNextQuestion();
       }
     }
