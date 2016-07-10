@@ -17,31 +17,49 @@
   	"id": 2,
     "name": "i am hungry",
     "answer": "me hungry",
-  	"type": "text",
+  	"type": "gesture",
   	"video": "https://media.spreadthesign.com/video/mp4/13/93471.mp4"
   },
   {
-  	"id": 3,
-  	"answer": "you",
-  	"type": "gesture",
-  	"video": "https://media.spreadthesign.com/video/mp4/13/51110.mp4"
+    "id": 3,
+    "name": "you",
+    "answer": "you",
+    "type": "gesture",
+    "video": "https://media.spreadthesign.com/video/mp4/13/89928.mp4"
   },
   {
-  	"id": 4,
-  	"answer": "are you hungry?",
-  	"type": "gesture",
-  	"video": "https://media.spreadthesign.com/video/mp4/13/89928.mp4"
+    "id": 4,
+    "name": "are you hungry?",
+    "answer": "you hungry you",
+    "type": "gesture",
+    "video": "https://media.spreadthesign.com/video/mp4/13/89928.mp4"
   },
   {
-  	"id": 5,
-  	"answer": "want",
-  	"type": "gesture",
-  	"video": "https://media.spreadthesign.com/video/mp4/13/50936.mp4"
+    "id": 5,
+    "name": "drink",
+    "answer": "drink",
+    "type": "gesture",
+    "video": "https://media.spreadthesign.com/video/mp4/13/153289.mp4"
   },
   {
-  	"id": 6,
-  	"answer": "i want this",
-  	"type": "text",
-  	"video": "https://media.spreadthesign.com/video/mp4/13/73478.mp4"
+    "id": 6,
+    "name": "want",
+    "answer": "want",
+    "type": "gesture",
+    "video": "https://media.spreadthesign.com/video/mp4/13/50936.mp4"
+  },
+  {
+    "id": 7,
+    "name": "i want a drink",
+    "answer": "me want drink",
+    "type": "gesture",
+    "video": ""
+  },
+  {
+    "id": 8,
+    "name": "do you want a drink?",
+    "answer": "you want drink you",
+    "type": "gesture",
+    "video": ""
   }
 ]

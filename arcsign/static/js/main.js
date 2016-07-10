@@ -12,6 +12,7 @@ $(function(){
       return {
         answerList: [],
         answered: false,
+        userAnswer: '',
       };
     },
 
@@ -24,17 +25,18 @@ $(function(){
       self.gestureArmed = true;
       Leap.loop({background: true}, {
         hand: function(hand){
-          // if (self.gestureArmed) {
-          //   console.log('velocity[1]: ' + hand.palmVelocity[1] + ' grabStrength: ' + hand.grabStrength +' ' + self.gestureArmed);
-          // }
-          if (hand.palmVelocity[1] < -300 && self.gestureArmed) {
-            console.log(' velocity[1]: ' + hand.palmVelocity[1] + 'grabStrength: ' + hand.grabStrength +' ' + self.gestureArmed);
+          var d1 = hand.indexFinger.distal.direction();
+          if (hand.palmVelocity[1] < -300 && hand.grabStrength > 0.1 && self.gestureArmed) {
+            console.log(' velocity[1]: ' + hand.palmVelocity[1] + ' grabStrength: ' + hand.grabStrength +' ' + self.gestureArmed);
             self.gestureTrigger('hungry');
           }
-          var d1 = hand.indexFinger.distal.direction();
           if (hand.palmVelocity[2] > 300 && d1[2] > 0.25 && self.gestureArmed) {
             console.log('velocity[2]: ' + hand.palmVelocity[2] + ' fingerDirection: ' + d1[2] + ' ' + self.gestureArmed);
             self.gestureTrigger('me');
+          }
+          if (hand.palmVelocity[2] < -300 && d1[2] < -0.25 && self.gestureArmed) {
+            console.log('velocity[2]: ' + hand.palmVelocity[2] + ' fingerDirection: ' + d1[2] + ' ' + self.gestureArmed);
+            self.gestureTrigger('you');
           }
         }
       })
@@ -42,9 +44,11 @@ $(function(){
 
     gestureTrigger: function(name) {
       this.gestureArmed = false;
+      console.log('gestureTrigger: ' + name);
 
       if (name == this.answerList[0]) {
         this.answerList.shift();
+        this.set('userAnswer', this.get('userAnswer') + name + ' ');
         if (this.answerList.length == 0) {
           this.set('answered', true);
         }
@@ -104,7 +108,6 @@ $(function(){
     },
 
     initialize: function() {
-      console.log(this.model.answerList);
       this.model.recordAnswer();
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.remove);
@@ -126,12 +129,12 @@ $(function(){
 
   var ArcsignView = Backbone.View.extend({
 
-    el: $("#arcsign"),
+    el: $(document),
 
     events: {
       'click #start-over': 'reset',
-      'click #prev-question': 'loadPreviousQuestion',
       'click #next-question': 'loadNextQuestion',
+      'keyup': 'keyAction'
     },
 
     initialize: function() {
@@ -165,18 +168,20 @@ $(function(){
       this.$("#question-box").html(view.render().el);
     },
 
-    loadPreviousQuestion: function() {
-      if (Lesson.currentQuestion > 0) {
-        Lesson.currentQuestion -= 1;
-        this.render();
-      }
-    },
-
     loadNextQuestion: function() {
       if (Lesson.currentQuestion < Lesson.length - 1) {
         Lesson.currentQuestion += 1;
         this.render();
       }
+    },
+
+
+    keyAction: function(e) {
+      console.log(e);
+        var code = e.keyCode || e.which;
+        if(code == 32) { 
+            this.loadNextQuestion();
+        }
     }
   });
 
